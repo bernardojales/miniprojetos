@@ -7,7 +7,7 @@ docker info
 
 ## images
 <strong>Commands:</strong><br>
-usage: docker ``<command>``
+usage: docker image ``<command>``
 ```sh
 
   build       Build an image from a Dockerfile
@@ -26,7 +26,7 @@ usage: docker ``<command>``
 
 ## containers
 <strong>Commands:</strong><br>
-usage: docker ``<command>``
+usage: docker container`` <command>``
 ```sh
   attach      Attach local standard input, output, and error streams to a running container
   commit      Create a new image from a container's changes
@@ -56,7 +56,7 @@ usage: docker ``<command>``
 ```
 ### volumes
 <strong>Commands:</strong><br>
-usage: docker ``<command>``
+usage: docker volume`` <command>``
 ```sh
 create      Create a volume
 inspect     Display detailed information on one or more volumes
@@ -67,7 +67,7 @@ update      Update a volume (cluster volumes only)
 ```
 ### networks
 <strong>Commands:</strong><br>
-usage: docker ``<command>``
+usage: docker network`` <command>``
 ```sh
   connect     Connect a container to a network
   create      Create a network

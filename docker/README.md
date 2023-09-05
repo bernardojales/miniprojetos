@@ -1,5 +1,5 @@
 ## Why should i learn
-- It is the start point of IaC(infrestructure as Code)
+- It is the start point of IaC(infrastructure as Code)
 - Quick way to create environment that can be reproduced easily on every machine
 
 ## Where should i begin

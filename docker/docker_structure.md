@@ -44,5 +44,3 @@ it is not that simple, the concept of containers is simple, but it is hard to fu
 
 
 [recommended articles](https://blog.lsantos.dev/entendendo-runtimes-de-containers/)
-
-
