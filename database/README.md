@@ -8,6 +8,9 @@
 ```sh
 docker compose up -d mongo # setup mongodb
 ```
+- [setup virtual environment](https://docs.google.com/document/d/1QI9jc3wl92B6KOrpgS-xi9OnOO1kkAm6g4pHx42Mwsk/edit#heading=h.v74wpoyxy3z)
+- install dependencies
+```sh
+pip install -r requirements.txt
+```
 - there is a [python script](./server.py) that interacts with mongodb using pymongo lib
-- lets go, learn more about [docker structure](./docker_structure.md).
-- well, it is time to learn the basic info commands [file_link](./info_commands.sh)

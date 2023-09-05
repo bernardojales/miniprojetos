@@ -73,6 +73,11 @@ except DuplicateKeyError:
 # store_collection.delete_one(filter) # delete the first document that match with the passed filter
 # store_collection.delete_many(filter) # delete all documents that match with the passed filter
 
+# challenge
+# create some petshot store document and do CRUD operations with this document
+# create three pets that has a field as foreign_key with reference to the petshot store
+# find all pets by petshop foreing_key filter
+
 # drop collection
 store_collection.drop()
 # drop database
