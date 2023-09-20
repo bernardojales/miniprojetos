@@ -1,3 +1,6 @@
+#challenges estão no server.py, deixei esse arquivo só pra teste
+
+
 """from sanic import Sanic, response
 from sanic.exceptions import NotFound
 from pymongo import MongoClient

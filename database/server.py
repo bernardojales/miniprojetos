@@ -73,10 +73,163 @@ except DuplicateKeyError:
 # store_collection.delete_one(filter) # delete the first document that match with the passed filter
 # store_collection.delete_many(filter) # delete all documents that match with the passed filter
 
+#------------------------------------------------------------------------------------------------------------------------------------------------
+
 # challenge
+
 # create some petshot store document and do CRUD operations with this document
-# create three pets that has a field as foreign_key with reference to the petshot store
-# find all pets by petshop foreing_key filter
+
+#------------------------------------------------------------------------------------------------------------------------------------------------
+
+# First way to do (hardcoded in classes)
+class Store:
+    def __init__(self, name, location, rating):
+        self.name = name
+        self.location = location
+        self.rating = rating
+
+class Pet:
+    def __init__(self, name, species, age, store_id):
+        self.name = name
+        self.species = species
+        self.age = age
+        self.store_id = store_id
+
+#------------------------------------------------------------------------------------------------------------------------------------------------
+
+# Second way of doing it, with json documents: Create a petshop store document
+
+store_doc = {
+    "name": "Petland",
+    "location": "Rua X",
+    "rating": 4.5
+}
+
+# Insert the store document into the store_collection
+
+store_collection.insert_one(store_doc)
+
+# Check if the document has been inserted successfully
+
+print("Petshop store document created:", store_doc)
+
+#------------------------------------------------------------------------------------------------------------------------------------------------
+
+# Challenge 2: create three pets that has a field as foreign_key with reference to the petshot store
+
+#------------------------------------------------------------------------------------------------------------------------------------------------
+
+#First way of doing:
+
+# Create a Store object
+petland = Store("Petland", "71 Rua X", 4.5)
+
+# Insert the store document into the store_collection
+store_collection.insert_one(petland.__dict__)
+
+# Check if the document has been inserted successfully
+print("Petshop store document created:", petland.__dict__)
+
+# Create a Store object
+petland = Store("Petland", "71 Rua X", 4.5)
+
+# Insert the store document into the store_collection
+store_collection.insert_one(petland.__dict__)
+
+# Check if the document has been inserted successfully
+print("Petshop store document created:", petland.__dict__)
+
+# Create Pet objects and insert pet documents into the pet_collection
+pets = [
+    Pet("Ted", "Dog", 3, petland.__dict__["_id"]),
+    Pet("Whiskers", "Cat", 2, petland.__dict__["_id"]),
+    Pet("Rex", "Dog", 5, petland.__dict__["_id"])
+]
+
+pet_docs = [pet.__dict__ for pet in pets]
+
+pet_collection.insert_many(pet_docs)
+
+# Check if the pet documents have been inserted successfully
+print("Three pet documents created:", pet_docs)
+
+#------------------------------------------------------------------------------------------------------------------------------------------------
+
+# Second way of doing it:
+
+# Creating three pet documents with a foreign key reference to the store
+pets = [
+    {
+        "name": "Ted",
+        "species": "Dog",
+        "age": 3,
+        "store_id": store_doc["_id"]  # Use the _id of the store document as a reference
+    },
+    {
+        "name": "Mel",
+        "species": "Cat",
+        "age": 2,
+        "store_id": store_doc["_id"]
+    },
+    {
+        "name": "Rex",
+        "species": "Dog",
+        "age": 5,
+        "store_id": store_doc["_id"]
+    }
+]
+
+
+# Insert the pet documents into the pet_collection
+pet_collection.insert_many(pets)
+
+# Check if the pet documents have been inserted successfully
+print("Three pet documents created:", pets)
+
+#------------------------------------------------------------------------------------------------------------------------------------------------
+
+#Challenge 3: find all pets by petshop foreing_key filter
+
+#------------------------------------------------------------------------------------------------------------------------------------------------
+
+# First way of doing it: hardcoded
+
+# Define the filter to find pets by store_id (foreign key)
+store_id = petland.__dict__["_id"]
+store_filter = {"store_id": store_id}
+
+# Find all pets that belong to the "Pet Paradise" store
+matching_pets = list(petland.find(store_filter))
+
+# Print the matching pets
+print("Pets in Petland:")
+for pet in matching_pets:
+    print(f"Name: {pet['name']}, Species: {pet['species']}, Age: {pet['age']}")
+
+#------------------------------------------------------------------------------------------------------------------------------------------------
+
+# Create a Store object
+pet_paradise = Store("Petland", "71 Rua X", 4.5)
+
+# Insert the store document into the store_collection
+store_collection.insert_one(petland.__dict__)
+
+# Check if the document has been inserted successfully
+print("Petshop store document created:", petland.__dict__)
+
+
+# Define the filter to find pets by store_id (foreign key)
+store_filter = {"store_id": store_doc["_id"]}
+
+# Find all pets that belong to the "Pet Paradise" store
+matching_pets = list(pet_collection.find(store_filter))
+
+# Print the matching pets
+print("Pets in Petland:")
+for pet in matching_pets:
+    print(f"Name: {pet['name']}, Species: {pet['species']}, Age: {pet['age']}")
+
+#------------------------------------------------------------------------------------------------------------------------------------------------
 
 # drop collection
 store_collection.drop()
