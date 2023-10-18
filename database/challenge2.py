@@ -29,7 +29,7 @@
 class PetshopRepository:
     def __init__(self, database):
         self.collection = database["petshop"]
-
+        
     def create(self, data):
         return self.collection.insert_one(data)
 
@@ -64,10 +64,24 @@ class PetRepository:
 
     def delete_one(self, filter):
         return self.collection.delete_one(filter)
-
-
+    
+""" # Part 2
+1. Create a PetshopModel to validate the user input and add as functionality on POST method;
+2. Use the PetshopModel to format the return of POST method;
+3. Use the PetshopModel to format the return of GET method on get_one;
+4. Use the ListPetshop to format the return of GET method on get_all;
+5. Use the UpdatePetshopModel to validate the user input and add as functionality on PATCH method;
+6. Use the PetshopModel to format the return of PATCH method on update_one;
+7. Use the PetModel to validate the user input and add as functionality on POST method;
+8. Use the PetModel to format the return of POST method;
+9. Use the PetModel to format the return of GET method on get_one;
+10. Use the ListPet to format the return of GET method on get_all;
+11. Use the UpdatePetModel to validate the user input and add as functionality on PATCH method;
+12. Use the PetModel to format the return of PATCH method on update_one
 
 """
+
+
 #creating the class for a template for managing connection with MongoDB
 
 class MongoDBConnectionManager:
@@ -80,6 +94,7 @@ class MongoDBConnectionManager:
     def close_connection(self):
         self.client.close()
 
+"""
 """
 """
 creating petshop repository and pet repository
