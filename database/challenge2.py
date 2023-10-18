@@ -68,8 +68,6 @@ class PetRepository:
 
 
 """
-
-
 #creating the class for a template for managing connection with MongoDB
 
 class MongoDBConnectionManager:
@@ -82,6 +80,7 @@ class MongoDBConnectionManager:
     def close_connection(self):
         self.client.close()
 
+"""
 """
 creating petshop repository and pet repository
 ~~~repository is a design pattern used in software development to abstract and encapsulate the data access logic for a specific data source or collection
@@ -109,7 +108,7 @@ Encapsulates the data access logic, abstracting it away from the rest of the app
 Manages interactions with the "pet" collection in the MongoDB database.
 Provides methods to perform CRUD operations on documents within the "pet" collection.
 Like PetshopRepository, it abstracts the data access logic for the "pet" collection.
-
+""""
 """
 class PetshopRepository:
     def __init__(self, database):
