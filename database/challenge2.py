@@ -26,6 +26,31 @@
 2. Identify database disconnection status and log it;
 
 """
+
+from sanic import Sanic, response
+from repository import PetshopRepository, PetRepository
+from models import PetshopModel, UpdatePetshopModel, PetModel, UpdatePetModel, ListPetshop, ListPet
+app = Sanic(__name__)
+
+# Create instances of repositories
+petshop_repository = PetshopRepository()
+pet_repository = PetRepository()
+
+# Endpoints for petshop collection
+@app.route('/petshop', methods=['POST'])
+async def create_petshop(request):
+    # Validate input using PetshopModel
+    data = request.json
+    petshop_model = PetshopModel(**data)
+    petshop_model.validate()
+
+    # Insert data into petshop collection
+    result = petshop_repository.create(data)
+    
+    # Format response using PetshopModel
+    petshop_model.id = str(result.inserted_id)
+    return response.json(petshop_model.dict(), status=201) #status code 201 means 'created' in HTTP
+
 class PetshopRepository:
     def __init__(self, database):
         self.collection = database["petshop"]
@@ -80,9 +105,7 @@ class PetRepository:
 12. Use the PetModel to format the return of PATCH method on update_one
 
 """
-
-
-#creating the class for a template for managing connection with MongoDB
+###creating the class for a template for managing connection with MongoDB
 
 class MongoDBConnectionManager:
     def __init__(self, host, port, username, password):
