@@ -28,8 +28,13 @@
 """
 
 from sanic import Sanic, response
+from sanic.exceptions import SanicException
+from pydantic import ValidationError
+import Pylance
+import PyMongo
 from repository import PetshopRepository, PetRepository
 from models import PetshopModel, UpdatePetshopModel, PetModel, UpdatePetModel, ListPetshop, ListPet
+
 app = Sanic(__name__)
 
 # Create instances of repositories
