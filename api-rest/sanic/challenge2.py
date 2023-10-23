@@ -37,6 +37,59 @@ from models import PetshopModel, UpdatePetshopModel, PetModel, UpdatePetModel, L
 
 app = Sanic(__name__)
 
+
+#challenge 2, parte 3
+
+@app.route('/petshop/<petshop_id>', methods=['GET'])
+async def get_petshop(request, store_id):
+    # Find the petshop by id
+    petshop = await petshop_collection.find_one({'_id': ObjectId(store_id)})
+    if petshop:
+        # Format the response using PetshopModel
+        petshop_model = PetshopModel(**petshop)
+        return json(petshop_model.dict())
+    else:
+        return json({'error': 'Petshop not found'}, status=404)
+    
+#challenge 2, topico 4
+
+from typing import List
+from sanic import Sanic
+from sanic.response import json
+from pymongo import MongoClient
+from bson import ObjectId
+from pydantic import BaseModel
+
+app = Sanic(__name__)
+
+# Define o modelo Petshop
+class Petshop(BaseModel):
+    name: str
+    location: str
+    phone: int
+    rating: float
+
+# Define o modelo ListPetshop
+class ListPetshop(BaseModel):
+    __root__: List[Petshop]
+
+# Conecte-se ao servidor MongoDB
+client = MongoClient('mongodb://localhost:27017/')
+db = client['petshop']
+petshop_collection = db['petshops']
+
+# Defina o método GET para recuperar todos os petshops
+@app.route('/petshops')
+async def get_petshops(request):
+    # Encontre todos os petshops na coleção
+    petshops = await petshop_collection.find().to_list(length=None)
+    # Formate a resposta usando ListPetshop
+    response_data = ListPetshop(__root__=[Petshop(**petshop) for petshop in petshops])
+    # Retorne a resposta como JSON
+    return json(response_data.dict())
+
+#parte 4
+
 # Create instances of repositories
 petshop_repository = PetshopRepository()
 pet_repository = PetRepository()
@@ -55,6 +108,14 @@ async def create_petshop(request):
     # Format response using PetshopModel
     petshop_model.id = str(result.inserted_id)
     return response.json(petshop_model.dict(), status=201) #status code 201 means 'created' in HTTP
+
+#parte 6
+
+# Define o filtro para atualizar a loja de animais com o nome "Petland"
+
+filter = {'name': 'Petland'}
+# Define os dados atualizados para a loja de animais
+updated_data = {'name': 'Petland', 'location': 'Rua Y', 'phone': '83991227888', 'rating': '4.8'}
 
 class PetshopRepository:
     def __init__(self, database):
